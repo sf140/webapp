@@ -7,9 +7,9 @@ import pickle
 
 #taking load fn for loading file files 
 def load():
-    with open(r"C:\Users\syed\Desktop\practiceee\model.pkl", "rb") as file: #load model file
+    with open(r"model.pkl", "rb") as file: #load model file
         model = pickle.load(file)
-    with open(r"C:\Users\syed\Desktop\practiceee\scaler.pkl", "rb") as file: #load scaler file
+    with open(r"scaler.pkl", "rb") as file: #load scaler file
         scaler = pickle.load(file)
         return model, scaler
     
