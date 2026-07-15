@@ -84,7 +84,7 @@ if st.button("click for check"):
        if total_assets < loan_amount:
             rejection_reasons.append("Insufficient total amount of asset for requested loan amount.")
 
-       st.error("❌ Loan Rejected")
+       st.error("Loan Rejected")
 
        if rejection_reasons:
            for reason in rejection_reasons:
