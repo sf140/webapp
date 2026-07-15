@@ -73,15 +73,22 @@ if st.button("click for check"):
     if prediction == 1:
        st.success(f"Loan Accepted")
     else:
+       total_assets = residential_assets_value + commercial_assets_value + luxury_assets_value + bank_asset_value
        rejection_reasons = []
+
        if cibil_score < 700:
             rejection_reasons.append(f"Low CIBIL Score ({cibil_score}). A score of 700+ is generally required.")
 
-       if loan_amount > (income_annum * 3):
+       elif loan_amount > (income_annum * 3):
             rejection_reasons.append("Requested loan amount is too high compared to your annual income.")
 
-       total_assets = residential_assets_value + commercial_assets_value + luxury_assets_value + bank_asset_value
-       if total_assets < loan_amount:
+       elif total_assets < loan_amount:
             rejection_reasons.append("Insufficient total amount of asset for requested loan amount.")
 
        st.error("Loan Rejected")
+
+       if rejection_reasons:
+           for reason in rejection_reasons:
+                st.write(f"{reason}")
+       else:
+           st.write("application accepted ")
