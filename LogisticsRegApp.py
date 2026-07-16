@@ -22,15 +22,15 @@ st.write("Welcome To The Loan Approval System") #display text
 col1, col2 = st.columns(2) #taking cols for seperation of numbers and text inputs
 
 with col1: #numrical inputs
-    no_of_dependents = st.number_input("no of departments?", value=None, min_value=0)
-    income_annum = st.number_input("income annum?", value=None, min_value=0)
-    loan_amount = st.number_input("loan amount?", value=None, min_value=0)
-    loan_term = st.number_input("loan term?", value=None, min_value=0)
-    cibil_score = st.number_input("cibil score?", value=None, min_value=0)
-    residential_assets_value = st.number_input("residential assets value?", value=None, min_value=0)
-    commercial_assets_value = st.number_input("commercial assets value?", value=None, min_value=0)
-    luxury_assets_value = st.number_input("luxury assets value?", value=None, min_value=0)
-    bank_asset_value = st.number_input("bank asset value?", value=None, min_value=0)
+    no_of_dependents = st.number_input("no of departments?", value=None)
+    income_annum = st.number_input("income annum?", value=None)
+    loan_amount = st.number_input("loan amount?", value=None)
+    loan_term = st.number_input("loan term?", value=None)
+    cibil_score = st.number_input("cibil score?", value=None)
+    residential_assets_value = st.number_input("residential assets value?", value=None)
+    commercial_assets_value = st.number_input("commercial assets value?", value=None)
+    luxury_assets_value = st.number_input("luxury assets value?", value=None)
+    bank_asset_value = st.number_input("bank asset value?", value=None)
 
 with col2: #text inputs
     education = st.selectbox('education', [' Graduate', ' Not Graduate'], index=None)
@@ -39,17 +39,25 @@ with col2: #text inputs
 #puting prediction button
 if st.button("click for check"):
 
+#checking all the cols is fill
+    if (no_of_dependents is None and income_annum is None and loan_amount is None and 
+        loan_term is None and cibil_score is None and residential_assets_value is None and 
+        commercial_assets_value is None or luxury_assets_value is None or 
+        bank_asset_value is None and education is None and self_employed is None):
+        st.warning("Form filling is necessary for loan approval")
+
 #prediction processing after taking inputs 
-    input = {
-     ' no_of_dependents': no_of_dependents,
-     ' income_annum': income_annum,
-     ' loan_amount': loan_amount,
-     ' loan_term': loan_term,
-     ' cibil_score': cibil_score,
-     ' residential_assets_value': residential_assets_value,
-     ' commercial_assets_value': commercial_assets_value,
-     ' luxury_assets_value': luxury_assets_value,
-     ' bank_asset_value': bank_asset_value,
+    else:
+      input = {
+      ' no_of_dependents': no_of_dependents,
+      ' income_annum': income_annum,
+      ' loan_amount': loan_amount,
+      ' loan_term': loan_term,
+      ' cibil_score': cibil_score,
+      ' residential_assets_value': residential_assets_value,
+      ' commercial_assets_value': commercial_assets_value,
+      ' luxury_assets_value': luxury_assets_value,
+      ' bank_asset_value': bank_asset_value,
 
     #assign key values to education selectionbox options and put condition on it
      ' education_ Graduate': 1 if education == ' Graduate' else 0,
@@ -73,20 +81,4 @@ if st.button("click for check"):
     if prediction == 1:
        st.success(f"Loan Accepted")
     else:
-       total_assets = residential_assets_value + commercial_assets_value + luxury_assets_value + bank_asset_value
-       rejection_reasons = []
-
-       if cibil_score < 700:
-            rejection_reasons.append(f"Low CIBIL Score ({cibil_score}). A score of 700+ is generally required.")
-
-       if loan_amount > (income_annum * 3):
-            rejection_reasons.append("Requested loan amount is too high compared to your annual income.")
-
-       if total_assets < loan_amount:
-            rejection_reasons.append("Insufficient total amount of asset for requested loan amount.")
-
-       st.error("Loan Rejected")
-
-       if rejection_reasons:
-           for reason in rejection_reasons:
-                st.write(f"{reason}")
+       st.success(f"Loan Rejected")  
